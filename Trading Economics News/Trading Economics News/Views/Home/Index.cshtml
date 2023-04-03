@@ -1,0 +1,45 @@
+﻿@model IEnumerable<News>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <div class="container-fluid">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter Country" id="keyword">
+            <button class="btn btn-outline-primary" type="button" id="btnSearch">
+                <i class="bi bi-search"></i> Search
+            </button>            
+        </div>
+        <div>
+            <p class="text-success">* Free accounts have access to the following countries: Mexico, New Zealand, Sweden, Thailand.</p>
+        </div>
+        <div id="newsDiv">
+            <partial name="NewsPartial.cshtml" model="@Model"></partial>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <script>
+            var input = $('#keyword');
+            var button = $('#btnSearch');
+            button.click(function () {
+                event.preventDefault();
+                var keyword = input.val();
+                var url = '@Url.Action("Search", "Home")' + '?q=' + keyword;
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function (data) {
+                        $('#newsDiv').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        $('#newsDiv').html(error)
+                    }
+                });
+            });
+        </script>
+}
+

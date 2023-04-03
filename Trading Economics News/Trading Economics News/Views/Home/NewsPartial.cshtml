@@ -1,0 +1,49 @@
+﻿@model IEnumerable<News>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@foreach (News news in Model)
+{
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card my-3 h-80">
+                <div class="card-header">
+                    @news.date.Substring(0, 10)
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@news.title</h5>
+                    <h6 class="card-subtitle mb-4 text-body-secondary">
+                        <span class="badge text-bg-warning">@news.category</span>
+                        <span class="badge text-bg-warning">@news.country</span>
+                    </h6>
+                    <p class="card-text two-lines-ellipsis">
+                        @news.description
+                    </p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=@("#news" + @news.id)>
+                        Read More
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="@("news" + @news.id)" tabindex="-1" aria-labelledby="readMoreModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="readMoreModalLabel">@news.title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @news.description
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
